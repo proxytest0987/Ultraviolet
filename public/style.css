@@ -1,0 +1,70 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.wrap { width: 100%; max-width: 700px; }
+
+.card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+h1 { font-size: 2.4rem; text-align: center; margin-bottom: 6px; color: #1a1a2e; }
+.sub { text-align: center; color: #666; margin-bottom: 30px; font-size: 0.95rem; }
+
+.bar { display: flex; gap: 10px; margin-bottom: 16px; }
+
+.bar input {
+    flex: 1; padding: 14px 20px; border: 2px solid #ddd; border-radius: 50px;
+    font-size: 1rem; outline: none; transition: border-color 0.2s;
+}
+.bar input:focus { border-color: #0f3460; }
+
+.bar button {
+    padding: 14px 28px; background: #0f3460; color: white; border: none;
+    border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+.bar button:hover { background: #16213e; transform: translateY(-1px); }
+
+.engines {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    font-size: 0.9rem; color: #555; margin-bottom: 28px; padding: 12px 16px;
+    background: #f5f5f5; border-radius: 12px;
+}
+.engines label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+
+.shortcuts {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;
+}
+
+.s-btn {
+    padding: 13px 8px; border: none; border-radius: 12px; color: white;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.s-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+
+.ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+.yt { background: #ff0000; } .wp { background: #333; }
+.ddg { background: #de5833; } .sp { background: #4285f4; } .tw { background: #1da1f2; }
+
+.note {
+    text-align: center; font-size: 0.85rem; color: #888; padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+@media (max-width: 500px) {
+    .card { padding: 24px 18px; } h1 { font-size: 1.8rem; }
+    .shortcuts { grid-template-columns: repeat(2, 1fr); } .bar { flex-direction: column; }
+}
