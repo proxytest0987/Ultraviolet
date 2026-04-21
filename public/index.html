@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 MyTools</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrap">
+        <div class="card">
+            <h1>🌐 MyTools</h1>
+            <p class="sub">Instagram・YouTube・Wikipedia 完全対応</p>
+
+            <div class="bar">
+                <input id="addr" type="text" placeholder="URLまたは検索キーワードを入力..." autocomplete="off" />
+                <button onclick="go()">GO</button>
+            </div>
+
+            <div class="engines">
+                <span>検索エンジン：</span>
+                <label><input type="radio" name="eng" value="ddg" checked> 🦆 DuckDuckGo</label>
+                <label><input type="radio" name="eng" value="sp"> 🔒 StartPage</label>
+            </div>
+
+            <div class="shortcuts">
+                <button class="s-btn ig" onclick="go('https://www.instagram.com')">📸 Instagram</button>
+                <button class="s-btn yt" onclick="go('https://www.youtube.com')">📺 YouTube</button>
+                <button class="s-btn wp" onclick="go('https://ja.wikipedia.org')">📚 Wikipedia</button>
+                <button class="s-btn ddg" onclick="go('https://duckduckgo.com')">🦆 DuckDuckGo</button>
+                <button class="s-btn sp" onclick="go('https://www.startpage.com')">🔒 StartPage</button>
+                <button class="s-btn tw" onclick="go('https://twitter.com')">🐦 Twitter/X</button>
+            </div>
+
+            <div class="note">
+                <p>✅ すべての通信はセキュア接続で行われます</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv.config.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+                .register("/sw.js", { scope: __uv$config.prefix })
+                .then(() => console.log("✅ Service Worker registered"))
+                .catch((e) => console.error("❌ SW failed:", e));
+        }
+
+        function isUrl(s) {
+            return s.startsWith("http://") || s.startsWith("https://") || 
+                   (/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(s) && !s.includes(" "));
+        }
+
+        function getEngine(q) {
+            const v = document.querySelector('input[name="eng"]:checked').value;
+            if (v === "sp") return "https://www.startpage.com/search?q=" + encodeURIComponent(q);
+            return "https://duckduckgo.com/?q=" + encodeURIComponent(q);
+        }
+
+        async function go(direct) {
+            const raw = direct || document.getElementById("addr").value.trim();
+            if (!raw) return;
+
+            let url;
+            if (isUrl(raw)) {
+                url = raw.startsWith("http") ? raw : "https://" + raw;
+            } else {
+                url = getEngine(raw);
+            }
+
+            await navigator.serviceWorker.ready;
+            location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+        }
+
+        document.getElementById("addr").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") go();
+        });
+    </script>
+</body>
+</html>
